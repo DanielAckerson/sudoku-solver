@@ -10,4 +10,18 @@ fn main() {
     println!("set a value: b[0] == {}, b[1] == {}", b[0], b[1]);
 
     println!("new board:\n{}", b);
+
+    for i in 0..b.degree {
+        b[(i, 3)] = 3;
+    }
+
+    for col in b.cols() {
+        println!("column {:?}", col);
+    }
+
+    println!("\n{}", b);
+
+    for z in b.zones() {
+        println!("{:?}", z);
+    }
 }
