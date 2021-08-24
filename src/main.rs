@@ -1,6 +1,8 @@
 mod board;
+mod solver;
 
 use board::Board;
+use solver::solve;
 
 fn main() {
     let mut b = Board::new(9);
