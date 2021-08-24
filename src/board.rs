@@ -1,14 +1,18 @@
 use std::fmt;
 use std::ops::{Index, IndexMut};
-
-// use std::collections::BTreeSet;
+use std::convert::From;
 
 #[derive(Debug, PartialEq)]
 pub struct Board {
-    pub cells: [i8; 81],
+    cells: Vec<isize>,
+    pub degree: usize,
 }
 
 impl Board {
+    pub fn new(degree: usize) -> Board {
+        Board { cells: vec![0; degree], degree: degree }
+    }
+
     pub fn simple_display(&self) -> String {
         let mut text = "".to_owned();
 
@@ -29,8 +33,19 @@ impl Board {
     }
 }
 
+impl From<Vec<isize>> for Board {
+    // TODO: change this to something else. From<_> must always succeed but we can't guarantee that
+    // item's size will be a square number
+    fn from(item: Vec<isize>) -> Self {
+        let degree = (item.len() as f64).sqrt() as usize;
+        // TODO: validate cell values?
+
+        Board { cells: item.clone(), degree: degree }
+    }
+}
+
 impl Index<usize> for Board {
-    type Output = i8;
+    type Output = isize;
 
     fn index(&self, index: usize) -> &Self::Output {
         &self.cells[index]
@@ -44,7 +59,7 @@ impl IndexMut<usize> for Board {
 }
 
 impl Index<(usize, usize)> for Board {
-    type Output = i8;
+    type Output = isize;
 
     fn index(&self, pos: (usize, usize)) -> &Self::Output {
         &self.cells[pos.1 + pos.0 * 9]

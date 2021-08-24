@@ -3,7 +3,7 @@ mod board;
 use board::Board;
 
 fn main() {
-    let mut b = Board { cells: [0; 81] };
+    let mut b = Board::new(9);
     println!("empty board:\n{}", b);
 
     b[0] = 12;
